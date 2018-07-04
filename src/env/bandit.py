@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Bandit(object):
     def __init__(self, average=0, std=1):
         self.average = average
@@ -15,6 +16,7 @@ class BanditEnv(object):
     """
     def __init__(self, averages):
         self.bandits = [Bandit(average=average) for average in averages]
+        self.action_space = [i for i in range(len(self.bandits))]
 
     def step(self, action):
         bandit = self.bandits[action]
