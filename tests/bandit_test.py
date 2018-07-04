@@ -3,6 +3,8 @@ import pytest
 from src.env import BanditEnv
 from src.env.bandit import Bandit
 from src.agent import BanditAgent
+from src.utils import HyperFitter
+
 BANDIT_RETURN_VALUE = 1
 
 
@@ -47,6 +49,33 @@ def test_bandit_agent_multiple():
         assert pytest.approx(average,  0.1) == agent.action_values[index]
 
     assert agent.action_selection_count[0] < agent.action_selection_count[1]  # Because 3 < 100
+
+
+def test_with_different_epsilons():
+    averages = [3, 4, 5, 100]
+    nb_iter = 2000
+    agent = make_agent(averages, nb_iter)
+    space = {
+        'epsilon': [0, 0.1, 0.9],
+    }
+    hf = HyperFitter(agent=agent, space=space)
+    hf.fit()
+
+    assert hf.best_params == {'epsilon': 0.1}
+
+
+def test_with_different_action_value_initial():  # Known as optimistic initial values
+    averages = [3, 4, 5, 100]
+    nb_iter = 2000
+    agent = make_agent(averages, nb_iter)
+    space = {
+        'epsilon': [0],
+        'action_value_initial': [0, 1000]
+    }
+    hf = HyperFitter(agent=agent, space=space)
+    hf.fit()
+
+    assert hf.best_params == {'epsilon': 0, 'action_value_initial': 1000}
 
 
 
