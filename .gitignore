@@ -1,4 +1,4 @@
 /.idea/
-*.ipynb
 .pytest_cache/v/cache/lastfailed
 *.pyc
+src/.ipynb_checkpoints/
