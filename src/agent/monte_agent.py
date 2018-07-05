@@ -43,6 +43,7 @@ class MonteAgent(AgentBase):
         if done:  # MonteCarlo algo updates when the episode is done
             _return = 0
             for t in reversed(self.transitions):
+                # TODO: Check if transition t is first, if not skip.
                 _return = _return + t.reward
                 self.append_return(t.state, t.action, _return)
             self.transitions = []
