@@ -3,6 +3,7 @@ from sklearn.model_selection import ParameterGrid
 
 class HyperFitter(object):
     """ Finds the best hyperparameters for an agent
+    TODO: Add option to compute std on score
 
     Attributes:
         results : A list with the results
