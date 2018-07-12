@@ -10,7 +10,7 @@ class MonteAgent(AgentBase):
     """
     MONTE CARLO CONTROL WITHOUT EXPLORING STARTS
     """
-    def __init__(self, env, nb_episodes, epsilon=0.1, verbose=False):
+    def __init__(self, env, nb_episodes=1, epsilon=0.1, verbose=False):
         AgentBase.__init__(self, env, nb_episodes)
         self.epsilon = epsilon
         self.verbose = verbose

@@ -6,7 +6,7 @@ class QlearnAgent(AgentBase):
     """
        Q-Learning
     """
-    def __init__(self, env, nb_episodes, epsilon=0.1, step_size=0.1, discount=1,  verbose=False):
+    def __init__(self, env, nb_episodes=1, epsilon=0.1, step_size=0.1, discount=1,  verbose=False):
         AgentBase.__init__(self, env, nb_episodes)
         self.epsilon = epsilon
         self.step_size = step_size

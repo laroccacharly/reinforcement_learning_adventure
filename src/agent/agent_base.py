@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 class AgentBase:
     __metaclass__ = ABCMeta
 
-    def __init__(self, env, nb_episodes):
+    def __init__(self, env, nb_episodes=1):
         self.env = env
         self.nb_episodes = nb_episodes
 
