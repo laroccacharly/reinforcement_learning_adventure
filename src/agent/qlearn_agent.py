@@ -1,5 +1,6 @@
 from src.utils import EGreedyPolicy
 from .agent_base import AgentBase
+from .model import Model
 
 
 class QlearnAgent(AgentBase):
@@ -14,16 +15,15 @@ class QlearnAgent(AgentBase):
         self.verbose = verbose
         self.action_space = [i for i in range(env.action_space.n)]
         self.transitions = []
-        self.default_action_value = 0
         self.reset()
 
     def reset(self):
-        self.values = {}
+        self.model = Model()
         self.policy = EGreedyPolicy(epsilon=self.epsilon)
 
     def action_values(self, state, action=None):
         if action is not None:
-            return self.values.setdefault(state, {}).setdefault(action, self.default_action_value)
+            return self.model(state, action)
         else:
             values = [self.action_values(state, a) for a in self.action_space]
             return dict(zip(self.action_space, values))
@@ -42,5 +42,5 @@ class QlearnAgent(AgentBase):
         self.update_action_value(state, action, new_value)
 
     def update_action_value(self, state, action, value):
-        self.values[state][action] = value
+        return self.model.update(state, action, value)
 

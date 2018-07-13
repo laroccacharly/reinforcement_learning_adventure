@@ -13,11 +13,10 @@ def test_learn():
     next_state = 1
     next_action = 1
     agent.learn(state, action, reward, next_state, next_action, done=False)
-    assert agent.values[state][action] == step_size * reward
+    assert agent.model(state, action) == step_size * reward
 
 
 def test_score():
     agent.reset()
     score = agent.score()
-    assert agent.values != {}
     assert isinstance(score, float)
