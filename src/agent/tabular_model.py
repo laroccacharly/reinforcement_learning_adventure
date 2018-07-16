@@ -1,4 +1,5 @@
-class Model(object):
+
+class TabularModel(object):
     def __init__(self):
         self.values = {}
 
@@ -9,3 +10,12 @@ class Model(object):
         prev_value = self.__call__(state, action)
         self.values[state][action] = value
         return abs(prev_value - value)
+
+    def reset(self):
+        self.values = {}
+
+
+
+
+
+
