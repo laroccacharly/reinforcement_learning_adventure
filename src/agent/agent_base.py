@@ -1,5 +1,8 @@
 from abc import ABCMeta, abstractmethod
 
+from .tabular_model import TabularModel
+from src.utils import EGreedyPolicy
+
 
 class AgentBase:
     __metaclass__ = ABCMeta
@@ -56,3 +59,32 @@ class AgentBase:
             total_reward += self.play_one_episode()
 
         return total_reward
+
+
+class GreedyAgentBase(AgentBase):
+    def __init__(self, env, nb_episodes, epsilon=0.1):
+        AgentBase.__init__(self, env, nb_episodes)
+        self.epsilon = epsilon
+        self.action_space_dim = env.action_space.n
+        self.action_space = [i for i in range(self.action_space_dim)]
+        self.model = TabularModel()
+
+    def reset(self):
+        self.policy = EGreedyPolicy(epsilon=self.epsilon)
+        self.model.reset()
+
+    def choose_action(self, state):
+        action_values = self.action_values(state)
+        action = self.policy(action_values)
+        return action
+
+    def action_values(self, state, action=None):
+        if action is not None:
+            return self.model(state, action)
+        else:
+            values = [self.action_values(state, a) for a in self.action_space]
+            return dict(zip(self.action_space, values))
+
+    def learn(self,  state, action, reward, next_state, next_action, done):
+        raise NotImplementedError
+
