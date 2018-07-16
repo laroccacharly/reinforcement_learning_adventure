@@ -18,5 +18,7 @@ def test_learn():
 
 def test_score():
     agent.reset()
+    assert agent.model(state=0, action=0) == 0
     score = agent.score()
+    assert agent.model(state=0, action=0) != 0
     assert isinstance(score, float)
