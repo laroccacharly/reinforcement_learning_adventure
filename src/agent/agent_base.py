@@ -26,6 +26,8 @@ class AgentBase:
     def set_params(self, params):
         for k, v in params.items():
             setattr(self, k, v)
+            if self.model is not None: # Kinda hacky. Allows me to broadcast attributes down to the model.
+                setattr(self.model, k, v)
         self.reset()
 
     def play_one_episode(self, render=False):
