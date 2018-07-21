@@ -5,9 +5,15 @@ import numpy as np
 class Featurizer(object):
     """
         Wrapper around sklearn scaler and RBFSamplers.
+        It samples the observation space and action space of the env.
+        After, it scales the data by removing the mean and scaling to unit variance.
+        Finally, a feature map is made using RBFSampler.
     """
-    def __init__(self, nb_features, env):
-        observation_examples = np.array([env.observation_space.sample().tolist() for _ in range(10000)])
+    def __init__(self, nb_features, env, with_action=False):
+        self.with_action = with_action
+        self.env = env
+        self.nb_samples = 10000
+        samples = self.make_samples()
         remaining = nb_features % 4
         n_components = int(nb_features / 4)
         featurizer = sklearn.pipeline.FeatureUnion([
@@ -18,13 +24,26 @@ class Featurizer(object):
             ("rbf5", RBFSampler(gamma=0.3, n_components=remaining))
         ])
         scaler = sklearn.preprocessing.StandardScaler()
-        scaler.fit(observation_examples)
-        featurizer.fit(scaler.transform(observation_examples))
+        scaler.fit(samples)
+        featurizer.fit(scaler.transform(samples))
 
         self.nb_features = nb_features
         self.scaler = scaler
         self.featurizer = featurizer
 
-    def transform(self, observation):
+    def make_samples(self):
+        return np.array([self.make_sample() for _ in range(self.nb_samples)])
+
+    def make_sample(self):
+        state = self.env.observation_space.sample().tolist()
+        action = self.env.action_space.sample()
+        if self.with_action:
+            return state + [action]
+        else:
+            return state
+
+    def transform(self, observation, action=None):
+        if action is not None:
+            observation = observation.tolist() + [action]
         scaled = self.scaler.transform([observation])
         return self.featurizer.transform(scaled)[0]
