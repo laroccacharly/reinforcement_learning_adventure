@@ -2,8 +2,8 @@ import numpy as np
 
 
 class AgentHelper(object):
-    """This is just a small class to help testing
-
+    """
+        This is just a small class to help testing
     """
     def __init__(self, with_noise=False, noise_std=1):
         self.foo = 1

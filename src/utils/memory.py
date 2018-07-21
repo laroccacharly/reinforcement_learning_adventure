@@ -3,6 +3,9 @@ from src.utils.misc import Transition
 
 
 class ReplayMemory(object):
+    """
+    A mini database to store and then sample batches of data.
+    """
     def __init__(self, capacity):
         self.capacity = capacity
         self.memory = []

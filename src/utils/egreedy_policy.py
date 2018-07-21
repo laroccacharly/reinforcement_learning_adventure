@@ -2,6 +2,11 @@ import numpy as np
 
 
 class EGreedyPolicy(object):
+    """
+        Epsilon greedy policy.
+        You call the object with a dict of action values ex : {action_1: value_1, action_2: value_2, action_3: value_3}
+        It returns the chosen action.
+    """
     def __init__(self, epsilon):
         self.epsilon = epsilon
 

@@ -1,4 +1,8 @@
 class TabularModel(object):
+    """
+    Basic model for discrete state and action space.
+    Implements the update rule.
+    """
     def __init__(self, learning_rate=1):
         self.learning_rate = learning_rate
         self.reset()

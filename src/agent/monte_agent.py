@@ -5,7 +5,7 @@ from src.utils.misc import Transition
 
 class MonteAgent(GreedyAgentBase):
     """
-    MONTE CARLO CONTROL WITHOUT EXPLORING STARTS
+    Famous Monte Carlo agent.
     """
     def __init__(self, env, nb_episodes=1, epsilon=0.1, verbose=False):
         GreedyAgentBase.__init__(self, env, nb_episodes, epsilon)

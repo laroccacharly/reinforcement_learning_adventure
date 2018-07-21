@@ -18,6 +18,9 @@ def to_var(x):
 
 
 class DeepModel(ModelBase):
+    """
+    A layer on top of the neural networks. A NN for each action.
+    """
     def __init__(self, env, learning_rate):
         self.env = env
         self.learning_rate = learning_rate

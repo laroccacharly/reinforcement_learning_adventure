@@ -2,6 +2,9 @@ import numpy as np
 
 
 class BanditAgent:
+    """
+    An agent that can solve the basic bandit problem.
+    """
     def __init__(self, env, nb_iter, epsilon=0.1, verbose=False):
         self.env = env
         self.action_space = env.action_space

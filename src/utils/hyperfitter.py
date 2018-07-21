@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 
 # https://stackoverflow.com/questions/15033511/compute-a-confidence-interval-from-sample-data
+# This functions finds the mean and the confidence interval of a set of data.
 def mean_confidence_interval(data, confidence):
     a = 1.0*np.array(data)
     n = len(a)
@@ -15,10 +16,9 @@ def mean_confidence_interval(data, confidence):
 
 
 class HyperFitter(object):
-    """ Finds the best hyperparameters for an agent
+    """
+    Finds the best hyperparameters for an agent
 
-    Attributes:
-        results : A list with the results
     """
     def __init__(self, space, agent, nb_iter=1, confidence=0.9, nb_points=None, random=False, verbose=False):
         """
@@ -47,7 +47,6 @@ class HyperFitter(object):
     def fit(self):
         """
         Finds the score for different parameters and stores the results
-        :return: None
         """
         if self.random:
             for _ in range(self.nb_points):
@@ -62,6 +61,12 @@ class HyperFitter(object):
         self.best_params = best_result['params']
 
     def plot(self, x_axis_name, compare_on):
+        """
+        Plots the scores for specified parameters.
+
+        :param x_axis_name: the name of the parameter you want to plot the score for. Usually it is epsilon or the learning rate
+        :param compare_on: the name of the parameter to compare the score on.
+        """
 
         compare_on_values = self.space[compare_on]
         x_values = self.space[x_axis_name]
@@ -73,7 +78,7 @@ class HyperFitter(object):
                 if result['params'][compare_on] == value:
                     scores.append(result['score'])
                     errors.append(result['error'])
-            plt.errorbar(x_values, scores, errors, label=compare_on + ' is ' + str(value)) # compare_on + ' is ' + str(value)
+            plt.errorbar(x_values, scores, errors, label=compare_on + ' is ' + str(value))
         plt.legend()
         plt.xlabel(x_axis_name)
         plt.ylabel('score')

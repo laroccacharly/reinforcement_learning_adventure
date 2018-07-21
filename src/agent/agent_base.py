@@ -1,10 +1,13 @@
 from abc import ABCMeta, abstractmethod
-
 from .tabular_model import TabularModel
 from src.utils import EGreedyPolicy
 
 
 class AgentBase:
+    """
+    The base of every agent. This is the interface with the env.
+    Every child implements a different way of choosing an action (policy) and learning from data.
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self, env, nb_episodes=1):
@@ -64,6 +67,11 @@ class AgentBase:
 
 
 class GreedyAgentBase(AgentBase):
+    """
+    Because most agents are greedy.
+    It implements the choose_action method using the EGreedyPolicy.
+    His children would have different ways of learning the action_values.
+    """
     def __init__(self, env, nb_episodes, epsilon=0.1):
         AgentBase.__init__(self, env, nb_episodes)
         self.epsilon = epsilon

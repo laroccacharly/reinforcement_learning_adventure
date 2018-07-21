@@ -24,7 +24,7 @@ class SubModel:
 
     def __call__(self, state):
         x = self.featurizer.transform(state)
-        return x.dot(self.weights)  # We model the Q function as linear combinaison of an extended state vector.
+        return x.dot(self.weights)  # We model the Q function as linear combination of an extended state vector.
 
     def update(self, state, target):
         x = self.featurizer.transform(state)

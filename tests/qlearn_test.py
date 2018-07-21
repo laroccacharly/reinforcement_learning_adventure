@@ -23,7 +23,7 @@ def test_linear():
     assert score > -2000
 
 def test_deep():
-    return 0 # Disabled because it takes a while to run
+    return 0 # Test skipped because it takes a while to run.
     # We use hyperfitter here because there are too many combinations to tests manually.
     # These worked :
     # {'learning_rate': 0.001, 'nb_hidden_1': 100, 'nb_hidden_2': 200, 'activation': 'relu', 'optim': 'Adam'}
