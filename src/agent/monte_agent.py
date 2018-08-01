@@ -1,11 +1,15 @@
 from src.agent.agent_base import GreedyAgentBase
 from statistics import mean
+
+from src.agent.tabular_model import TabularModel
 from src.utils.misc import Transition
 
 
-class MonteAgent(GreedyAgentBase):
+class MonteTabularAgent(GreedyAgentBase):
     """
     Famous Monte Carlo agent.
+    observation space : discrete
+    action space : discrete
     """
     def __init__(self, env, nb_episodes=1, epsilon=0.1, verbose=False):
         GreedyAgentBase.__init__(self, env, nb_episodes, epsilon)
@@ -13,9 +17,10 @@ class MonteAgent(GreedyAgentBase):
         self.reset()
 
     def reset(self):
-        super(MonteAgent, self).reset()
+        super(MonteTabularAgent, self).reset()
         self.transitions = []
         self.returns_dict = {}
+        self.model = TabularModel()
 
     def learn(self, state, action, reward, next_state, next_action, done):
         transition_present = False
