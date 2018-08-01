@@ -1,4 +1,4 @@
-from src.agent.deep_model import DeepModel
+from src.agent.qlearning import DeepModel
 import pytest
 import gym
 

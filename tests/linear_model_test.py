@@ -1,4 +1,4 @@
-from src.agent.linear_model import LinearModel
+from src.agent.qlearning import LinearModel
 import gym
 
 env = gym.make("MountainCar-v0")
