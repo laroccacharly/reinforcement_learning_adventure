@@ -1,4 +1,5 @@
 from .bandit import BanditAgent
-from .monte_agent import MonteAgent
-from .qlearn_agent import QlearnAgent
-from .actor_critic_agent import ActorCriticAgent
+from .monte_agent import MonteTabularAgent
+from .DDPG.agent import DDPGAgent
+from .qlearning.qlearn_agent import QlearnTabularAgent, QlearnLinearAgent, QlearnDeepAgent
+from .actor_critic import ActorCriticAgent

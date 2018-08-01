@@ -3,35 +3,23 @@ import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 
-from src.agent.model_base import ModelBase
+from src.utils.misc import to_var
+from .model_base import ModelBase
 from src.utils import Featurizer
-
-
-def to_var(x):
-    """
-        Because PyTorch works with Variables
-    """
-    x = np.array(x)
-    x = torch.Tensor(x)
-    x = Variable(x)
-    return x
 
 
 class DeepModel(ModelBase):
     """
     A layer on top of the neural networks. A NN for each action.
     """
-    def __init__(self, env, learning_rate):
+    def __init__(self, env, learning_rate, nb_hidden_1=100, nb_hidden_2=100, activation='relu', optim='SGD'):
         self.env = env
         self.learning_rate = learning_rate
         self.featurizer = Featurizer(env=env, nb_features=400)
-        self.nb_hidden_1 = 100
-        self.nb_hidden_2 = 100
-        self.activation = 'relu'
-        self.optim = 'SGD'
-        self.reset()
-
-    def reset(self):
+        self.nb_hidden_1 = nb_hidden_1
+        self.nb_hidden_2 = nb_hidden_2
+        self.activation = activation
+        self.optim = optim
         self.models = [self.make_model() for _ in range(self.env.action_space.n)]
 
     def make_model(self):

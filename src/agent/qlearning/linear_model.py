@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.agent.model_base import ModelBase
+from .model_base import ModelBase
 from src.utils import Featurizer
 
 
@@ -9,9 +9,6 @@ class LinearModel(ModelBase):
         self.env = env
         self.learning_rate = learning_rate
         self.featurizer = Featurizer(env=env, nb_features=400)
-        self.reset()
-
-    def reset(self):
         self.models = [SubModel(self.featurizer, learning_rate=self.learning_rate) for _ in range(self.env.action_space.n)]
 
 
