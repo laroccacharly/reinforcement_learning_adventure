@@ -13,6 +13,7 @@ class AgentBase:
     def __init__(self, env, nb_episodes=1):
         self.env = env
         self.nb_episodes = nb_episodes
+        self.reset()
 
     @abstractmethod
     def choose_action(self, state):
@@ -22,28 +23,27 @@ class AgentBase:
     def learn(self,  state, action, reward, next_state, next_action, done):
         raise NotImplementedError
 
-    @abstractmethod
     def reset(self):
-        raise NotImplementedError
+        self.total_reward = 0
+        self.global_step = 0
 
     def set_params(self, params):
         for k, v in params.items():
             setattr(self, k, v)
-            if hasattr(self, 'model'): # Kinda hacky. Allows me to broadcast attributes down to the model.
-                setattr(self.model, k, v)
         self.reset()
 
     def play_one_episode(self, render=False):
         state = self.env.reset()
         action = self.choose_action(state)
 
-        total_reward = 0
+        current_reward = 0
         done = False
         while not done:
             if render:
                 self.env.render()
             next_state, reward, done, _ = self.env.step(action)
-            total_reward += reward
+            current_reward += reward
+            self.total_reward += reward
 
             if done:
                 self.learn(state, action, reward, next_state, None, done)
@@ -55,8 +55,9 @@ class AgentBase:
 
             action = next_action
             state = next_state
+            self.global_step += 1
 
-        return total_reward
+        return current_reward
 
     def score(self):
         total_reward = 0
@@ -73,15 +74,15 @@ class GreedyAgentBase(AgentBase):
     His children would have different ways of learning the action_values.
     """
     def __init__(self, env, nb_episodes, epsilon=0.1):
-        AgentBase.__init__(self, env, nb_episodes)
         self.epsilon = epsilon
+        AgentBase.__init__(self, env, nb_episodes)
         self.action_space_dim = env.action_space.n
         self.action_space = [i for i in range(self.action_space_dim)]
-        self.model = TabularModel()
+        self.reset()
 
     def reset(self):
+        super(GreedyAgentBase, self).reset()
         self.policy = EGreedyPolicy(epsilon=self.epsilon)
-        self.model.reset()
 
     def choose_action(self, state):
         action_values = self.action_values(state)
