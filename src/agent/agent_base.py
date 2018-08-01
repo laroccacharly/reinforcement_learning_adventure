@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from .tabular_model import TabularModel
 from src.utils import EGreedyPolicy
 
 

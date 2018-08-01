@@ -1,5 +1,5 @@
 from src.utils import HyperFitter
-from src.utils import AgentHelper
+from tests.utils import AgentHelper
 
 
 agent = AgentHelper()
