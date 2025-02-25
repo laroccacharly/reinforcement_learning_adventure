@@ -1,17 +1,13 @@
 # A reinforcement learning adventure
-This is a compilation of reinforcement learning algorithms. 
+This repository contains a compilation of reinforcement learning algorithms and a test suite. 
 
-**
-There are no shortage of RL repos on github (see the Related works section). 
-If you are looking for state-of-the-art implementations I recommend you look into these.
-**
-
-
-## Goals of this project 
-Learn about RL by implementing algorithms by myself while using good practices (OOP, TDD)
-
-
-I noticed how most repos lack a test suite and good abstractions. 
+## List of algorithms
+- Action-value method (to solve the k-armed Bandit problem)
+- Q-Learning (using a linear model and a deep neural network)
+- Monte Carlo Control
+- Actor-Critic with eligibility traces 
+- DDPG 
+- PPO (WIP)
 
 ## Related works
 - OpenAI baseline (https://github.com/openai/baselines/tree/master/baselines )
@@ -24,19 +20,9 @@ I noticed how most repos lack a test suite and good abstractions.
 - Highly modularized implementation of popular deep RL algorithms in PyTorch (https://github.com/ShangtongZhang/DeepRL)
 
 
-## List of algorithms
-- Action-value method (to solve the k-armed Bandit problem)
-- Q-Learning (using a linear model and a deep neural network)
-- Monte Carlo Control
-- Actor-Critic with eligibility traces 
-- DDPG 
-- PPO (WIP)
-
-
 ## Hyperparameters tunning 
-This repo also includes an abstraction (HyperFitter) that allows a Grid or Random search 
-on the hyperparameter space of the agent. I was inspired by HyperOpt and sklearn GridSearchCV. 
-I had to make my own because they are not flexible enough for my needs. 
+This repository also includes an abstraction (HyperFitter) that allows a Grid or Random search 
+on the hyperparameter space of the agent. It is inspired by HyperOpt and sklearn GridSearchCV. 
 
 
 ## Dependencies 
@@ -46,7 +32,7 @@ I had to make my own because they are not flexible enough for my needs.
 - pytest (for testing)
 - sklearn (for feature mapping)
 - Matplotlib (for plotting)
-- NumPy (for everything else)
+- NumPy 
 
 ### Testing 
 Testing is an interesting issue in RL. 
